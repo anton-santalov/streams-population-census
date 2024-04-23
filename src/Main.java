@@ -17,12 +17,17 @@ public class Main {
         }
 
         long minorCount = persons.stream().filter(person -> person.getAge() < 18).count();
+        System.out.println("Number of minors: " + minorCount);
+
+        int limit = 20;
 
         List<String> militaryList = persons.stream()
             .filter(person -> person.getAge() < 27)
             .filter(person -> person.getAge() >= 18)
             .map(Person::getFamily)
             .collect(Collectors.toList());
+        System.out.printf("First %d out of %d conscripts: %s\n", limit, militaryList.size(),
+            militaryList.stream().limit(20).toList());
 
         List<String> laborList = persons.stream()
             .filter(person -> person.getEducation() == Education.HIGHER)
@@ -32,5 +37,7 @@ public class Main {
             .sorted(Comparator.comparing(Person::getFamily))
             .map(Person::getFamily)
             .collect(Collectors.toList());
+        System.out.printf("First %d out of %d workers: %s", limit, laborList.size(),
+            laborList.stream().limit(20).toList());
     }
 }
